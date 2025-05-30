@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>金刚经最接地气的6句话</title>
+  <style>
+    body, html {
+      margin: 0;
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(180deg, #f5f5f0, #e8f5e9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #card {
+      width: 80vw;
+      max-width: 500px;
+      min-height: 60vh;
+      background: linear-gradient(135deg, #ffffffcc, #f0fff4cc);
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+      font-size: 1.2em;
+      position: relative;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    #quote {
+      font-size: 1.6em;
+      margin: 30px 0 20px;
+      color: #4caf50;
+    }
+    #explanation {
+      line-height: 1.5;
+    }
+    .icon {
+      position: absolute;
+      font-size: 2em;
+      opacity: 0.2;
+    }
+    .icon.left {
+      left: 10px;
+      top: 10px;
+    }
+    .icon.right {
+      right: 10px;
+      bottom: 10px;
+    }
+    #randomBtn {
+      margin-top: 15px;
+      background: #a5d6a7;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 1em;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <div id="card">
+      <div class="icon left">🎋</div>
+      <div class="icon right">🌸</div>
+      <div id="quote"></div>
+      <div id="explanation"></div>
+    </div>
+    <div style="text-align:center;">
+      <button id="randomBtn">随机卡片</button>
+    </div>
+  </div>
+  <script>
+    const cards = [
+        {quote: '应无所住而生其心', explanation: '别给自己设限，别把心锁死。顺着当下做该做的事，就像跑步时只看前方，不被风景干扰。这样做事更放松，也更容易开心。'},
+        {quote: '过去心不可得，现在心不可得，未来心不可得', explanation: '别总纠结过去，也别一味担心未来。活在眼前的一分一秒，才能抓住真的好机会。记住，烦恼大多来自想太多。'},
+        {quote: '凡所有相，皆是虚妄', explanation: '眼睛看到的、耳朵听到的，常常是表面。别为表象钻牛角尖，换个角度想，很多纠结都不存在。'},
+        {quote: '一切有为法，如梦幻泡影', explanation: '人生里的大小事，说穿了就像做梦一样。别把得失看得太重，放宽心，你会发现很多烦恼都是自己吓自己。'},
+        {quote: '若菩萨有我相、人相…即非菩萨', explanation: '总想着跟别人比高低，只会让心更累。试着少点自我，多去体谅他人，你会发现关系顺多了，心里的结也松开了。'},
+        {quote: '离一切诸相，则名诸佛', explanation: '不执着于任何外在形式，才能真正轻松。对人对事都简单点，用心去感受当下，你会发现快乐其实很近。'},
+    ];
+    let current = 0;
+    const quote = document.getElementById('quote');
+    const explanation = document.getElementById('explanation');
+    const card = document.getElementById('card');
+    const randomBtn = document.getElementById('randomBtn');
+
+    function showCard(index) {
+      card.style.opacity = 0;
+      setTimeout(() => {
+        quote.textContent = cards[index].quote;
+        explanation.textContent = cards[index].explanation;
+        card.style.opacity = 1;
+      }, 200);
+    }
+    showCard(current);
+
+    let startX = 0;
+    card.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    }, false);
+    card.addEventListener('touchend', (e) => {
+      const delta = e.changedTouches[0].clientX - startX;
+      if (delta > 40) {
+        current = (current - 1 + cards.length) % cards.length;
+        showCard(current);
+      } else if (delta < -40) {
+        current = (current + 1) % cards.length;
+        showCard(current);
+      }
+    }, false);
+
+    randomBtn.addEventListener('click', () => {
+      current = Math.floor(Math.random() * cards.length);
+      showCard(current);
+    });
+  </script>
+</body>
+</html>
